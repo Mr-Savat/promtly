@@ -63,10 +63,10 @@ const variantConfig: Record<
   ToastVariant,
   { icon: typeof CheckCircle2; ring: string; iconColor: string }
 > = {
-  success: { icon: CheckCircle2, ring: 'border-mint-200', iconColor: 'text-mint-600' },
-  info: { icon: Info, ring: 'border-sky-200', iconColor: 'text-sky-600' },
-  warning: { icon: AlertTriangle, ring: 'border-amber-200', iconColor: 'text-amber-600' },
-  error: { icon: XCircle, ring: 'border-rose-200', iconColor: 'text-rose-600' },
+  success: { icon: CheckCircle2, ring: 'border-mint-200 dark:border-mint-800/80', iconColor: 'text-mint-600 dark:text-mint-400' },
+  info: { icon: Info, ring: 'border-sky-200 dark:border-sky-800/80', iconColor: 'text-sky-600 dark:text-sky-400' },
+  warning: { icon: AlertTriangle, ring: 'border-amber-200 dark:border-amber-800/80', iconColor: 'text-amber-600 dark:text-amber-400' },
+  error: { icon: XCircle, ring: 'border-rose-200 dark:border-rose-800/80', iconColor: 'text-rose-600 dark:text-rose-400' },
 };
 
 function ToastItem({ toast, onClose }: { toast: Toast; onClose: () => void }) {
@@ -74,15 +74,15 @@ function ToastItem({ toast, onClose }: { toast: Toast; onClose: () => void }) {
   const Icon = cfg.icon;
   return (
     <div
-      className={`pointer-events-auto flex items-start gap-3 rounded-xl border ${cfg.ring} bg-white px-4 py-3 shadow-pop animate-slide-up`}
+      className={`pointer-events-auto flex items-start gap-3 rounded-xl border ${cfg.ring} bg-white dark:bg-ink-900 px-4 py-3 shadow-pop animate-slide-up`}
       role="status"
     >
       <Icon size={18} className={`mt-0.5 shrink-0 ${cfg.iconColor}`} />
-      <p className="flex-1 text-sm text-ink-800">{toast.message}</p>
+      <p className="flex-1 text-sm text-ink-800 dark:text-ink-100">{toast.message}</p>
       <button
         type="button"
         onClick={onClose}
-        className="shrink-0 rounded p-0.5 text-ink-400 hover:bg-ink-100 hover:text-ink-700"
+        className="shrink-0 rounded p-0.5 text-ink-400 hover:bg-ink-100 hover:text-ink-700 dark:text-ink-400 dark:hover:bg-ink-800 dark:hover:text-ink-200"
         aria-label="Dismiss notification"
       >
         <X size={15} />

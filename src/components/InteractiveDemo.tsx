@@ -93,23 +93,23 @@ export function InteractiveDemo() {
   };
 
   return (
-    <div className="overflow-hidden rounded-2xl border border-ink-200 bg-white shadow-pop">
+    <div className="overflow-hidden rounded-2xl border border-ink-200 bg-white shadow-pop dark:border-ink-800 dark:bg-ink-900">
       {/* Window chrome */}
-      <div className="flex items-center gap-2 border-b border-ink-100 bg-ink-50/60 px-4 py-3">
+      <div className="flex items-center gap-2 border-b border-ink-100 bg-ink-50/60 px-4 py-3 dark:border-ink-800 dark:bg-ink-950/80">
         <span className="h-2.5 w-2.5 rounded-full bg-rose-300" />
         <span className="h-2.5 w-2.5 rounded-full bg-amber-300" />
         <span className="h-2.5 w-2.5 rounded-full bg-mint-300" />
         <span className="ml-3 text-xs font-medium text-ink-400">
           promptly.app / editor
         </span>
-        <span className="ml-auto inline-flex items-center gap-1 rounded-full bg-brand-50 px-2 py-0.5 text-[10px] font-semibold text-brand-600">
+        <span className="ml-auto inline-flex items-center gap-1 rounded-full bg-brand-50 px-2 py-0.5 text-[10px] font-semibold text-brand-600 dark:bg-brand-950/60 dark:text-brand-300">
           <Sparkles size={10} /> Live preview
         </span>
       </div>
 
       <div className="grid gap-0 md:grid-cols-[1.4fr_1fr]">
         {/* Editor pane */}
-        <div className="min-h-[360px] border-b border-ink-100 p-5 md:border-b-0 md:border-r">
+        <div className="min-h-[360px] border-b border-ink-100 p-5 md:border-b-0 md:border-r dark:border-ink-800">
           <div className="mb-3 flex items-center justify-between">
             <span className="text-xs font-semibold uppercase tracking-wider text-ink-400">
               New Prompt
@@ -117,61 +117,61 @@ export function InteractiveDemo() {
             {phase === 'typing' || phase === 'idle' ? (
               <span className="text-[11px] text-ink-400">typing...</span>
             ) : phase === 'analyzing' ? (
-              <span className="inline-flex items-center gap-1 text-[11px] font-medium text-brand-600">
+              <span className="inline-flex items-center gap-1 text-[11px] font-medium text-brand-600 dark:text-brand-400">
                 <Sparkles size={11} className="animate-spark-pulse" />
                 Analyzing...
               </span>
             ) : phase === 'issues' ? (
-              <span className="inline-flex items-center gap-1 text-[11px] font-medium text-amber-600">
+              <span className="inline-flex items-center gap-1 text-[11px] font-medium text-amber-600 dark:text-amber-400">
                 <TriangleAlert size={11} />
                 Missing info
               </span>
             ) : phase === 'improving' ? (
-              <span className="inline-flex items-center gap-1 text-[11px] font-medium text-brand-600">
+              <span className="inline-flex items-center gap-1 text-[11px] font-medium text-brand-600 dark:text-brand-400">
                 <Sparkles size={11} className="animate-spark-pulse" />
                 Improving...
               </span>
             ) : (
-              <span className="inline-flex items-center gap-1 text-[11px] font-medium text-mint-600">
+              <span className="inline-flex items-center gap-1 text-[11px] font-medium text-mint-600 dark:text-mint-400">
                 <Check size={11} />
                 Ready
               </span>
             )}
           </div>
 
-          <div className="min-h-[180px] rounded-xl border border-ink-200 bg-white p-4">
+          <div className="min-h-[180px] rounded-xl border border-ink-200 bg-white p-4 dark:border-ink-800 dark:bg-ink-950">
             {typed ? (
-              <p className="text-[15px] leading-relaxed text-ink-800">
+              <p className="text-[15px] leading-relaxed text-ink-800 dark:text-ink-100">
                 {typed}
                 {(phase === 'typing' || phase === 'idle') && (
                   <span className="ml-0.5 inline-block h-4 w-px animate-pulse bg-brand-500 align-middle" />
                 )}
               </p>
             ) : (
-              <p className="text-[15px] leading-relaxed text-ink-300">
+              <p className="text-[15px] leading-relaxed text-ink-300 dark:text-ink-600">
                 Tell AI what you want to accomplish...
               </p>
             )}
           </div>
 
           {phase === 'issues' && (
-            <div className="mt-4 animate-fade-in rounded-xl border border-amber-200 bg-amber-50/70 p-4">
-              <p className="text-xs font-semibold text-amber-800">
+            <div className="mt-4 animate-fade-in rounded-xl border border-amber-200 bg-amber-50/70 p-4 dark:border-amber-900/60 dark:bg-amber-950/40">
+              <p className="text-xs font-semibold text-amber-800 dark:text-amber-300">
                 Potentially missing
               </p>
               <ul className="mt-2 space-y-1.5">
                 {ISSUES.map((issue) => (
                   <li
                     key={issue.label}
-                    className="flex items-start gap-2 text-sm text-ink-700"
+                    className="flex items-start gap-2 text-sm text-ink-700 dark:text-ink-300"
                   >
                     <TriangleAlert
                       size={14}
-                      className="mt-0.5 shrink-0 text-amber-600"
+                      className="mt-0.5 shrink-0 text-amber-600 dark:text-amber-400"
                     />
                     <span>
                       <span className="font-medium">{issue.label}</span>
-                      <span className="text-ink-500"> — {issue.text}</span>
+                      <span className="text-ink-500 dark:text-ink-400"> — {issue.text}</span>
                     </span>
                   </li>
                 ))}
@@ -180,7 +180,7 @@ export function InteractiveDemo() {
                 <span className="inline-flex items-center gap-1 rounded-lg bg-brand-600 px-2.5 py-1.5 text-xs font-semibold text-white">
                   <Sparkles size={11} /> Ask me
                 </span>
-                <span className="inline-flex items-center gap-1 rounded-lg border border-ink-200 bg-white px-2.5 py-1.5 text-xs font-semibold text-ink-700">
+                <span className="inline-flex items-center gap-1 rounded-lg border border-ink-200 bg-white px-2.5 py-1.5 text-xs font-semibold text-ink-700 dark:border-ink-700 dark:bg-ink-800 dark:text-ink-200">
                   Improve
                 </span>
               </div>
@@ -188,10 +188,10 @@ export function InteractiveDemo() {
           )}
 
           {phase === 'done' && (
-            <div className="mt-4 animate-fade-in rounded-xl border border-mint-200 bg-mint-50/70 p-4">
+            <div className="mt-4 animate-fade-in rounded-xl border border-mint-200 bg-mint-50/70 p-4 dark:border-mint-900/60 dark:bg-mint-950/40">
               <div className="flex items-center gap-2">
-                <Check size={15} className="text-mint-600" />
-                <p className="text-sm font-semibold text-mint-800">
+                <Check size={15} className="text-mint-600 dark:text-mint-400" />
+                <p className="text-sm font-semibold text-mint-800 dark:text-mint-300">
                   Your prompt is ready
                 </p>
               </div>
@@ -200,29 +200,29 @@ export function InteractiveDemo() {
         </div>
 
         {/* Assistant pane */}
-        <div className="min-h-[360px] bg-ink-50/40 p-5">
+        <div className="min-h-[360px] bg-ink-50/40 p-5 dark:bg-ink-950/50">
           <div className="flex items-center gap-2">
             <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-brand-600 text-white">
               <Sparkles size={14} />
             </span>
-            <span className="text-sm font-semibold text-ink-900">
+            <span className="text-sm font-semibold text-ink-900 dark:text-white">
               Prompt Assistant
             </span>
           </div>
 
           <div className="mt-4 space-y-3">
             {(phase === 'idle' || phase === 'typing') && (
-              <p className="text-sm text-ink-400">
+              <p className="text-sm text-ink-400 dark:text-ink-500">
                 Start typing to see how Promptly helps...
               </p>
             )}
 
             {phase === 'analyzing' && (
               <div className="space-y-2.5 animate-fade-in">
-                <div className="h-3 w-3/4 rounded-full bg-ink-100 shimmer" />
-                <div className="h-3 w-1/2 rounded-full bg-ink-100 shimmer" />
-                <div className="h-3 w-2/3 rounded-full bg-ink-100 shimmer" />
-                <p className="pt-2 text-xs text-ink-400">
+                <div className="h-3 w-3/4 rounded-full bg-ink-100 shimmer dark:bg-ink-800" />
+                <div className="h-3 w-1/2 rounded-full bg-ink-100 shimmer dark:bg-ink-800" />
+                <div className="h-3 w-2/3 rounded-full bg-ink-100 shimmer dark:bg-ink-800" />
+                <p className="pt-2 text-xs text-ink-400 dark:text-ink-500">
                   Reading your request...
                 </p>
               </div>
@@ -230,7 +230,7 @@ export function InteractiveDemo() {
 
             {phase === 'issues' && (
               <div className="animate-fade-in space-y-3">
-                <p className="text-sm text-ink-700">
+                <p className="text-sm text-ink-700 dark:text-ink-300">
                   Your request is understandable, but some important details are
                   missing.
                 </p>
@@ -238,13 +238,13 @@ export function InteractiveDemo() {
                   {ISSUES.map((issue) => (
                     <div
                       key={issue.label}
-                      className="flex items-center gap-2 rounded-lg border border-amber-200 bg-white px-3 py-2"
+                      className="flex items-center gap-2 rounded-lg border border-amber-200 bg-white px-3 py-2 dark:border-amber-900/60 dark:bg-ink-900"
                     >
                       <TriangleAlert
                         size={13}
-                        className="shrink-0 text-amber-600"
+                        className="shrink-0 text-amber-600 dark:text-amber-400"
                       />
-                      <span className="text-sm text-ink-700">
+                      <span className="text-sm text-ink-700 dark:text-ink-200">
                         {issue.label}
                       </span>
                     </div>
@@ -255,24 +255,24 @@ export function InteractiveDemo() {
 
             {phase === 'improving' && (
               <div className="space-y-2.5 animate-fade-in">
-                <p className="text-sm text-ink-600">
+                <p className="text-sm text-ink-600 dark:text-ink-300">
                   Combining your answers into a clearer prompt...
                 </p>
                 <div className="space-y-2">
-                  <div className="h-3 w-full rounded-full bg-ink-100 shimmer" />
-                  <div className="h-3 w-5/6 rounded-full bg-ink-100 shimmer" />
-                  <div className="h-3 w-4/6 rounded-full bg-ink-100 shimmer" />
+                  <div className="h-3 w-full rounded-full bg-ink-100 shimmer dark:bg-ink-800" />
+                  <div className="h-3 w-5/6 rounded-full bg-ink-100 shimmer dark:bg-ink-800" />
+                  <div className="h-3 w-4/6 rounded-full bg-ink-100 shimmer dark:bg-ink-800" />
                 </div>
               </div>
             )}
 
             {phase === 'done' && (
               <div className="animate-slide-up space-y-3">
-                <p className="text-xs font-semibold uppercase tracking-wider text-mint-700">
+                <p className="text-xs font-semibold uppercase tracking-wider text-mint-700 dark:text-mint-400">
                   Improved prompt
                 </p>
-                <div className="rounded-xl border border-ink-200 bg-white p-3.5">
-                  <p className="line-clamp-[12] whitespace-pre-wrap text-[13px] leading-relaxed text-ink-800">
+                <div className="rounded-xl border border-ink-200 bg-white p-3.5 dark:border-ink-800 dark:bg-ink-950">
+                  <p className="line-clamp-[12] whitespace-pre-wrap text-[13px] leading-relaxed text-ink-800 dark:text-ink-200">
                     {IMPROVED}
                   </p>
                 </div>
@@ -281,7 +281,7 @@ export function InteractiveDemo() {
                   onClick={handleCopy}
                   className={`inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-semibold transition-colors ${
                     copied
-                      ? 'bg-mint-100 text-mint-700'
+                      ? 'bg-mint-100 text-mint-700 dark:bg-mint-950/60 dark:text-mint-300'
                       : 'bg-brand-600 text-white hover:bg-brand-700'
                   }`}
                 >
@@ -295,7 +295,7 @@ export function InteractiveDemo() {
           <button
             type="button"
             onClick={run}
-            className="mt-6 inline-flex items-center gap-1.5 text-xs font-medium text-brand-600 hover:text-brand-700"
+            className="mt-6 inline-flex items-center gap-1.5 text-xs font-medium text-brand-600 hover:text-brand-700 dark:text-brand-400 dark:hover:text-brand-300"
           >
             <ArrowRight size={12} />
             Replay demo

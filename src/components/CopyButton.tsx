@@ -54,7 +54,7 @@ export function CopyButton({
       onClick={handleCopy}
       className={`btn ${
         copied
-          ? 'bg-mint-50 text-mint-700 border border-mint-200'
+          ? 'bg-mint-50 text-mint-700 border border-mint-200 dark:bg-mint-950/60 dark:text-mint-300 dark:border-mint-800/60'
           : 'bg-brand-600 text-white hover:bg-brand-700'
       } ${sizing} ${className}`}
       aria-label={copied ? copiedLabel : label}

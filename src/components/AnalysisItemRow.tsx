@@ -8,27 +8,27 @@ interface AnalysisItemRowProps {
 const severityConfig = {
   good: {
     icon: CheckCircle2,
-    iconColor: 'text-mint-600',
-    bg: 'bg-mint-50',
-    border: 'border-mint-100',
+    iconColor: 'text-mint-600 dark:text-mint-400',
+    bg: 'bg-mint-50 dark:bg-mint-950/40',
+    border: 'border-mint-100 dark:border-mint-900/50',
     label: 'Clear',
-    labelColor: 'text-mint-700 bg-mint-50',
+    labelColor: 'text-mint-700 bg-mint-50 dark:text-mint-300 dark:bg-mint-900/60',
   },
   needs_attention: {
     icon: AlertTriangle,
-    iconColor: 'text-amber-600',
-    bg: 'bg-amber-50',
-    border: 'border-amber-100',
+    iconColor: 'text-amber-600 dark:text-amber-400',
+    bg: 'bg-amber-50 dark:bg-amber-950/40',
+    border: 'border-amber-100 dark:border-amber-900/50',
     label: 'Could improve',
-    labelColor: 'text-amber-700 bg-amber-50',
+    labelColor: 'text-amber-700 bg-amber-50 dark:text-amber-300 dark:bg-amber-900/60',
   },
   missing: {
     icon: CircleDashed,
-    iconColor: 'text-rose-600',
-    bg: 'bg-rose-50',
-    border: 'border-rose-100',
+    iconColor: 'text-rose-600 dark:text-rose-400',
+    bg: 'bg-rose-50 dark:bg-rose-950/40',
+    border: 'border-rose-100 dark:border-rose-900/50',
     label: 'Missing',
-    labelColor: 'text-rose-700 bg-rose-50',
+    labelColor: 'text-rose-700 bg-rose-50 dark:text-rose-300 dark:bg-rose-900/60',
   },
 };
 
@@ -56,7 +56,7 @@ export function AnalysisItemRow({ item }: AnalysisItemRowProps) {
       <Icon size={18} className={`mt-0.5 shrink-0 ${cfg.iconColor}`} />
       <div className="min-w-0 flex-1">
         <div className="flex items-center gap-2">
-          <span className="text-sm font-semibold text-ink-900">
+          <span className="text-sm font-semibold text-ink-900 dark:text-white">
             {categoryLabels[item.category] ?? item.category}
           </span>
           <span
@@ -65,12 +65,12 @@ export function AnalysisItemRow({ item }: AnalysisItemRowProps) {
             {cfg.label}
           </span>
         </div>
-        <p className="mt-1 text-sm leading-relaxed text-ink-700">
+        <p className="mt-1 text-sm leading-relaxed text-ink-700 dark:text-ink-300">
           {item.explanation}
         </p>
         {item.suggestion && (
-          <p className="mt-1.5 text-xs leading-relaxed text-ink-500">
-            <span className="font-medium text-ink-600">Suggestion: </span>
+          <p className="mt-1.5 text-xs leading-relaxed text-ink-500 dark:text-ink-400">
+            <span className="font-medium text-ink-600 dark:text-ink-300">Suggestion: </span>
             {item.suggestion}
           </p>
         )}

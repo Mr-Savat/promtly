@@ -20,21 +20,21 @@ export function ErrorState({
       }`}
     >
       <span
-        className={`inline-flex items-center justify-center rounded-full bg-rose-50 text-rose-600 ${
+        className={`inline-flex items-center justify-center rounded-full bg-rose-50 text-rose-600 dark:bg-rose-950/60 dark:text-rose-400 ${
           compact ? 'h-10 w-10' : 'h-12 w-12'
         }`}
       >
         <AlertTriangle size={compact ? 18 : 22} />
       </span>
       <h3
-        className={`mt-3 font-semibold text-ink-900 ${
+        className={`mt-3 font-semibold text-ink-900 dark:text-white ${
           compact ? 'text-sm' : 'text-base'
         }`}
       >
         {title}
       </h3>
       <p
-        className={`mt-1 max-w-sm text-ink-500 ${
+        className={`mt-1 max-w-sm text-ink-500 dark:text-ink-400 ${
           compact ? 'text-xs' : 'text-sm'
         }`}
       >
@@ -66,20 +66,20 @@ export function LoadingState({
       }`}
     >
       <span className="relative inline-flex h-10 w-10 items-center justify-center">
-        <span className="absolute inset-0 animate-ping rounded-full bg-brand-200 opacity-60" />
+        <span className="absolute inset-0 animate-ping rounded-full bg-brand-200 dark:bg-brand-900 opacity-60" />
         <span className="relative inline-flex h-10 w-10 items-center justify-center rounded-full bg-brand-600 text-white">
           <Sparkles size={18} className="animate-spark-pulse" />
         </span>
       </span>
       <p
-        className={`mt-3 font-medium text-ink-700 ${
+        className={`mt-3 font-medium text-ink-700 dark:text-ink-200 ${
           compact ? 'text-xs' : 'text-sm'
         }`}
       >
         {label}
       </p>
       {!compact && (
-        <div className="mt-3 h-1 w-32 overflow-hidden rounded-full bg-ink-100">
+        <div className="mt-3 h-1 w-32 overflow-hidden rounded-full bg-ink-100 dark:bg-ink-800">
           <div className="h-full w-1/2 animate-shimmer rounded-full bg-brand-500" />
         </div>
       )}

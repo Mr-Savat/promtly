@@ -51,13 +51,13 @@ export function HistoryPage() {
   };
 
   return (
-    <div className="mx-auto max-w-3xl px-4 py-6 lg:px-8 lg:py-8">
+    <div className="w-full px-4 py-6 sm:px-6 lg:px-8 lg:py-8">
       <div className="mb-6 flex items-end justify-between">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight text-ink-900">
+          <h1 className="text-2xl font-bold tracking-tight text-ink-900 dark:text-white">
             Prompt history
           </h1>
-          <p className="mt-1 text-sm text-ink-500">
+          <p className="mt-1 text-sm text-ink-500 dark:text-ink-400">
             Your recent prompts, newest first.
           </p>
         </div>
@@ -91,13 +91,13 @@ export function HistoryPage() {
 function EmptyHistory() {
   return (
     <div className="card flex flex-col items-center px-6 py-14 text-center">
-      <span className="flex h-12 w-12 items-center justify-center rounded-full bg-brand-50 text-brand-600">
+      <span className="flex h-12 w-12 items-center justify-center rounded-full bg-brand-50 text-brand-600 dark:bg-brand-950/60 dark:text-brand-400">
         <Clock size={22} />
       </span>
-      <h2 className="mt-4 text-base font-semibold text-ink-900">
+      <h2 className="mt-4 text-base font-semibold text-ink-900 dark:text-white">
         No prompts yet
       </h2>
-      <p className="mt-1.5 max-w-sm text-sm text-ink-500">
+      <p className="mt-1.5 max-w-sm text-sm text-ink-500 dark:text-ink-400">
         Write your first request and Promptly will help you turn it into a
         prompt AI can understand.
       </p>
@@ -123,27 +123,27 @@ function HistoryRow({
   const StatusBadge = () => {
     if (item.status === 'ready' && item.improved_text) {
       return (
-        <span className="inline-flex items-center gap-1 rounded-full bg-mint-50 px-2 py-0.5 text-[10px] font-semibold text-mint-700">
+        <span className="inline-flex items-center gap-1 rounded-full bg-mint-50 px-2 py-0.5 text-[10px] font-semibold text-mint-700 dark:bg-mint-950/60 dark:text-mint-300">
           <CheckCircle2 size={10} /> Improved
         </span>
       );
     }
     if (item.status === 'needs_info') {
       return (
-        <span className="inline-flex items-center gap-1 rounded-full bg-amber-50 px-2 py-0.5 text-[10px] font-semibold text-amber-700">
+        <span className="inline-flex items-center gap-1 rounded-full bg-amber-50 px-2 py-0.5 text-[10px] font-semibold text-amber-700 dark:bg-amber-950/60 dark:text-amber-300">
           <TriangleAlert size={10} /> Needs info
         </span>
       );
     }
     if (item.status === 'error') {
       return (
-        <span className="inline-flex items-center gap-1 rounded-full bg-rose-50 px-2 py-0.5 text-[10px] font-semibold text-rose-700">
+        <span className="inline-flex items-center gap-1 rounded-full bg-rose-50 px-2 py-0.5 text-[10px] font-semibold text-rose-700 dark:bg-rose-950/60 dark:text-rose-300">
           <CircleDashed size={10} /> Error
         </span>
       );
     }
     return (
-      <span className="inline-flex items-center gap-1 rounded-full bg-ink-100 px-2 py-0.5 text-[10px] font-semibold text-ink-600">
+      <span className="inline-flex items-center gap-1 rounded-full bg-ink-100 px-2 py-0.5 text-[10px] font-semibold text-ink-600 dark:bg-ink-800 dark:text-ink-300">
         Draft
       </span>
     );
@@ -155,22 +155,22 @@ function HistoryRow({
         <div className="min-w-0 flex-1">
           <div className="flex items-center gap-2">
             <StatusBadge />
-            <span className="text-xs text-ink-400">{dateLabel}</span>
+            <span className="text-xs text-ink-400 dark:text-ink-500">{dateLabel}</span>
             {item.quality_score != null && (
-              <span className="text-xs font-medium text-ink-500">
+              <span className="text-xs font-medium text-ink-500 dark:text-ink-400">
                 · quality {item.quality_score}
               </span>
             )}
           </div>
-          <p className="mt-2 text-sm font-medium text-ink-900 line-clamp-2">
+          <p translate="no" className="notranslate mt-2 text-sm font-medium text-ink-900 dark:text-white line-clamp-2">
             {item.original_text}
           </p>
           {item.improved_text && (
-            <div className="mt-3 rounded-lg border border-ink-100 bg-ink-50/50 p-3">
-              <p className="text-[11px] font-semibold uppercase tracking-wider text-mint-700">
+            <div className="mt-3 rounded-lg border border-ink-100 bg-ink-50/50 p-3 dark:border-ink-800 dark:bg-ink-950/60">
+              <p className="text-[11px] font-semibold uppercase tracking-wider text-mint-700 dark:text-mint-400">
                 Improved
               </p>
-              <p className="mt-1 line-clamp-3 whitespace-pre-wrap text-sm leading-relaxed text-ink-700">
+              <p translate="no" className="notranslate mt-1 line-clamp-3 whitespace-pre-wrap text-sm leading-relaxed text-ink-700 dark:text-ink-300">
                 {item.improved_text}
               </p>
             </div>

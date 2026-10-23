@@ -47,7 +47,8 @@ export function PromptEditor({
         placeholder={placeholder}
         aria-label={ariaLabel}
         spellCheck
-        className="w-full resize-none rounded-xl border border-ink-200 bg-white px-5 py-4 text-[17px] leading-relaxed text-ink-900 placeholder-ink-300 transition-colors hover:border-ink-300 focus:border-brand-400 focus:ring-2 focus:ring-brand-100 scrollbar-think"
+        translate="no"
+        className="notranslate w-full resize-none rounded-xl border border-ink-200 bg-white px-5 py-4 text-[17px] leading-relaxed text-ink-900 placeholder-ink-400 transition-colors hover:border-ink-300 focus:border-brand-400 focus:ring-2 focus:ring-brand-100 scrollbar-thin dark:border-ink-700 dark:bg-ink-900 dark:text-ink-50 dark:placeholder-ink-500 dark:hover:border-ink-600 dark:focus:border-brand-400 dark:focus:ring-brand-900/40"
         style={{ minHeight: 280 }}
       />
     </div>

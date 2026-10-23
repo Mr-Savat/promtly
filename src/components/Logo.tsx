@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom';
-import { Sparkles } from 'lucide-react';
 
 interface LogoProps {
   to?: string;
@@ -9,35 +8,29 @@ interface LogoProps {
 }
 
 const sizeMap = {
-  sm: { box: 'h-7 w-7', icon: 15, text: 'text-base' },
-  md: { box: 'h-8 w-8', icon: 17, text: 'text-lg' },
-  lg: { box: 'h-10 w-10', icon: 21, text: 'text-xl' },
+  sm: 'text-base',
+  md: 'text-lg sm:text-xl',
+  lg: 'text-2xl',
 };
 
 export function Logo({
   to = '/',
   size = 'md',
-  showWordmark = true,
   className = '',
 }: LogoProps) {
-  const s = sizeMap[size];
+  const textSize = sizeMap[size];
   return (
     <Link
       to={to}
-      className={`group inline-flex items-center gap-2.5 ${className}`}
+      className={`group inline-flex items-center select-none transition-transform active:scale-[0.98] ${className}`}
       aria-label="Promptly home"
     >
       <span
-        className={`${s.box} relative inline-flex items-center justify-center rounded-lg bg-brand-600 text-white shadow-soft transition-transform group-hover:scale-[1.04]`}
+        translate="no"
+        className={`notranslate ${textSize} font-extrabold tracking-tight text-ink-900 hover:text-ink-950 dark:text-white dark:hover:text-white transition-colors`}
       >
-        <Sparkles size={s.icon} strokeWidth={2.5} />
-        <span className="absolute -right-0.5 -top-0.5 h-2 w-2 rounded-full bg-mint-400 ring-2 ring-white" />
+        Promptly<span className="text-brand-600 dark:text-brand-400">.</span>
       </span>
-      {showWordmark && (
-        <span className={`${s.text} font-bold tracking-tight text-ink-900`}>
-          Promptly
-        </span>
-      )}
     </Link>
   );
 }

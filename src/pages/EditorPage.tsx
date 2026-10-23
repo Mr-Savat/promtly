@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import {
   AlertTriangle,
   ChevronDown,
@@ -38,6 +39,14 @@ type AssistantPanelTab = 'analysis' | 'questions' | 'result';
 export function EditorPage() {
   const flow = usePromptFlow();
   const { notify } = useToast();
+  const location = useLocation();
+
+  useEffect(() => {
+    const state = location.state as { initialPrompt?: string } | null;
+    if (state?.initialPrompt && !flow.text) {
+      flow.setText(state.initialPrompt);
+    }
+  }, [location.state, flow]);
 
   const [showAssistant, setShowAssistant] = useState(false);
   const [assistantTab, setAssistantTab] = useState<AssistantPanelTab>('analysis');
@@ -146,14 +155,14 @@ export function EditorPage() {
   const assistantOpen = showAssistant && (flow.phase === 'analyzed' || flow.phase === 'asking' || flow.phase === 'improving' || flow.phase === 'result' || flow.phase === 'analyzing');
 
   return (
-    <div className="mx-auto flex min-h-[calc(100vh-3.5rem)] max-w-6xl flex-col px-4 py-6 lg:min-h-[calc(100vh-4rem)] lg:px-8 lg:py-8">
+    <div className="flex min-h-[calc(100vh-4rem)] w-full flex-col px-4 py-6 sm:px-6 lg:px-8 lg:py-8">
       {/* Header */}
       <div className="mb-6 flex flex-wrap items-end justify-between gap-3">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight text-ink-900">
+          <h1 className="text-2xl font-bold tracking-tight text-ink-900 dark:text-white">
             New Prompt
           </h1>
-          <p className="mt-1 text-sm text-ink-500">
+          <p className="mt-1 text-sm text-ink-500 dark:text-ink-400">
             Tell AI what you want. Promptly helps you say it clearly.
           </p>
         </div>
@@ -188,16 +197,16 @@ export function EditorPage() {
             <button
               type="button"
               onClick={handleAnalyze}
-              className="group inline-flex w-fit items-center gap-2 rounded-full border border-brand-200 bg-white px-3.5 py-2 text-sm font-medium text-brand-700 shadow-soft transition-all hover:border-brand-300 hover:bg-brand-50 animate-fade-in"
+              className="group inline-flex w-fit items-center gap-2 rounded-full border border-brand-200 bg-white px-3.5 py-2 text-sm font-medium text-brand-700 shadow-soft transition-all hover:border-brand-300 hover:bg-brand-50 animate-fade-in dark:border-brand-900/60 dark:bg-ink-900 dark:text-brand-300 dark:hover:bg-brand-950/40"
             >
               <span className="relative flex h-5 w-5 items-center justify-center">
                 <Sparkles
                   size={14}
-                  className="animate-spark-pulse text-brand-600"
+                  className="animate-spark-pulse text-brand-600 dark:text-brand-400"
                 />
               </span>
               Analyze with Promptly
-              <span className="ml-1 hidden rounded bg-ink-100 px-1.5 py-0.5 text-[10px] font-semibold text-ink-500 sm:inline">
+              <span className="ml-1 hidden rounded bg-ink-100 px-1.5 py-0.5 text-[10px] font-semibold text-ink-500 sm:inline dark:bg-ink-800 dark:text-ink-400">
                 ⌘ + ⏎
               </span>
             </button>
@@ -206,7 +215,7 @@ export function EditorPage() {
           {/* Empty-state examples */}
           {flow.phase === 'empty' && (
             <div className="animate-fade-in">
-              <p className="mb-3 text-sm font-medium text-ink-600">
+              <p className="mb-3 text-sm font-medium text-ink-600 dark:text-ink-300">
                 Start with what you want to accomplish. Try one:
               </p>
               <div className="flex flex-wrap gap-2">
@@ -215,7 +224,7 @@ export function EditorPage() {
                     key={ex}
                     type="button"
                     onClick={() => handleExample(ex)}
-                    className="rounded-lg border border-ink-200 bg-white px-3.5 py-2 text-left text-sm text-ink-700 transition-all hover:border-brand-300 hover:bg-brand-50 hover:text-brand-700 active:scale-[0.98]"
+                    className="rounded-lg border border-ink-200 bg-white px-3.5 py-2 text-left text-sm text-ink-700 transition-all hover:border-brand-300 hover:bg-brand-50 hover:text-brand-700 active:scale-[0.98] dark:border-ink-800 dark:bg-ink-900 dark:text-ink-200 dark:hover:border-brand-600 dark:hover:bg-brand-950/40 dark:hover:text-brand-300"
                   >
                     {ex}
                   </button>
@@ -324,14 +333,14 @@ interface AssistantPanelProps {
 function AssistantPanel(props: AssistantPanelProps) {
   if (!props.open) {
     return (
-      <div className="sticky top-24 rounded-2xl border border-dashed border-ink-200 bg-white/50 p-6 text-center">
-        <span className="mx-auto flex h-10 w-10 items-center justify-center rounded-xl bg-ink-100 text-ink-400">
+      <div className="sticky top-24 rounded-2xl border border-dashed border-ink-200 bg-white/50 p-6 text-center dark:border-ink-800 dark:bg-ink-900/60">
+        <span className="mx-auto flex h-10 w-10 items-center justify-center rounded-xl bg-ink-100 text-ink-400 dark:bg-ink-800 dark:text-ink-300">
           <Sparkles size={18} />
         </span>
-        <p className="mt-3 text-sm font-medium text-ink-600">
+        <p className="mt-3 text-sm font-semibold text-ink-700 dark:text-ink-200">
           Promptly Assistant
         </p>
-        <p className="mt-1 text-xs text-ink-400">
+        <p className="mt-1 text-xs text-ink-500 dark:text-ink-400">
           Write a request and click Analyze. The assistant will show what's
           missing and help you fix it.
         </p>
@@ -340,7 +349,7 @@ function AssistantPanel(props: AssistantPanelProps) {
   }
 
   return (
-    <div className="sticky top-24 max-h-[calc(100vh-7rem)] overflow-hidden rounded-2xl border border-ink-200 bg-white shadow-card">
+    <div className="sticky top-24 max-h-[calc(100vh-7rem)] overflow-hidden rounded-2xl border border-ink-200 bg-white shadow-card dark:border-ink-800 dark:bg-ink-900">
       <PanelHeader
         tab={props.tab}
         onTabChange={props.onTabChange}
@@ -376,12 +385,12 @@ function PanelHeader({
   const visible = tabs.filter((t) => t.show);
 
   return (
-    <div className="border-b border-ink-100 px-5 py-3.5">
+    <div className="border-b border-ink-100 px-5 py-3.5 dark:border-ink-800">
       <div className="flex items-center gap-2">
         <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-brand-600 text-white">
           <Sparkles size={14} />
         </span>
-        <span className="text-sm font-semibold text-ink-900">
+        <span className="text-sm font-semibold text-ink-900 dark:text-white">
           Prompt Assistant
         </span>
       </div>
@@ -394,8 +403,8 @@ function PanelHeader({
               onClick={() => onTabChange(t.id)}
               className={`rounded-md px-2.5 py-1 text-xs font-medium transition-colors ${
                 tab === t.id
-                  ? 'bg-brand-50 text-brand-700'
-                  : 'text-ink-500 hover:bg-ink-50 hover:text-ink-800'
+                  ? 'bg-brand-50 text-brand-700 dark:bg-brand-950/60 dark:text-brand-300'
+                  : 'text-ink-500 hover:bg-ink-50 hover:text-ink-800 dark:text-ink-400 dark:hover:bg-ink-800 dark:hover:text-ink-200'
               }`}
             >
               {t.label}
@@ -427,7 +436,7 @@ function PanelBody(props: AssistantPanelProps) {
     const q = props.questions[props.currentQuestionIndex];
     if (!q) {
       return (
-        <p className="text-sm text-ink-500">
+        <p className="text-sm text-ink-500 dark:text-ink-400">
           No more questions. Generating your improved prompt...
         </p>
       );
@@ -451,8 +460,8 @@ function PanelBody(props: AssistantPanelProps) {
                     isCurrent
                       ? 'bg-brand-600 text-white shadow-soft font-semibold'
                       : isAnswered
-                      ? 'bg-emerald-50 text-emerald-700 hover:bg-emerald-100'
-                      : 'bg-ink-100 text-ink-600 hover:bg-ink-200'
+                      ? 'bg-emerald-50 text-emerald-700 hover:bg-emerald-100 dark:bg-emerald-950/60 dark:text-emerald-300 dark:hover:bg-emerald-900/60'
+                      : 'bg-ink-100 text-ink-600 hover:bg-ink-200 dark:bg-ink-800 dark:text-ink-400 dark:hover:bg-ink-700'
                   }`}
                 >
                   <span>Q{i + 1}</span>
@@ -475,24 +484,24 @@ function PanelBody(props: AssistantPanelProps) {
 
         {/* Real-time Live Preview Draft Widget */}
         {props.result && (
-          <div className="rounded-xl border border-ink-200/80 bg-ink-50/50 p-3.5 transition-all">
+          <div className="rounded-xl border border-ink-200/80 bg-ink-50/50 p-3.5 transition-all dark:border-ink-800 dark:bg-ink-950/60">
             <div className="flex items-center justify-between mb-1.5">
               <div className="flex items-center gap-1.5">
                 <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
-                <span className="text-[11px] font-semibold uppercase tracking-wider text-ink-600">
+                <span className="text-[11px] font-semibold uppercase tracking-wider text-ink-600 dark:text-ink-400">
                   Live Preview Draft
                 </span>
               </div>
               <button
                 type="button"
                 onClick={props.onImproveNow}
-                className="inline-flex items-center gap-1 text-xs font-semibold text-brand-600 hover:text-brand-700"
+                className="inline-flex items-center gap-1 text-xs font-semibold text-brand-600 hover:text-brand-700 dark:text-brand-400 dark:hover:text-brand-300"
               >
                 <span>Finish now</span>
                 <Sparkles size={11} />
               </button>
             </div>
-            <pre className="whitespace-pre-wrap break-words font-sans text-xs leading-relaxed text-ink-800 line-clamp-3">
+            <pre className="whitespace-pre-wrap break-words font-sans text-xs leading-relaxed text-ink-800 line-clamp-3 dark:text-ink-200">
               {props.result.improvedPrompt}
             </pre>
           </div>
@@ -553,11 +562,11 @@ function AnalysisView({
         showDimensionBadges={true}
       />
 
-      <p className="text-sm leading-relaxed text-ink-600">{analysis.summary}</p>
+      <p className="text-sm leading-relaxed text-ink-600 dark:text-ink-300">{analysis.summary}</p>
 
       {hasMissing && (
         <div>
-          <p className="mb-2 flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-rose-600">
+          <p className="mb-2 flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-rose-600 dark:text-rose-400">
             <AlertTriangle size={12} />
             Potentially missing
           </p>
@@ -571,7 +580,7 @@ function AnalysisView({
 
       {hasAttention && (
         <div>
-          <p className="mb-2 flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-amber-600">
+          <p className="mb-2 flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-amber-600 dark:text-amber-400">
             <Lightbulb size={12} />
             Could be clearer
           </p>
@@ -585,7 +594,7 @@ function AnalysisView({
 
       {analysis.good.length > 0 && (
         <div>
-          <p className="mb-2 flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-mint-600">
+          <p className="mb-2 flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-mint-600 dark:text-mint-400">
             <ListChecks size={12} />
             Already clear
           </p>
@@ -598,11 +607,11 @@ function AnalysisView({
       )}
 
       {allClear && (
-        <div className="rounded-xl border border-mint-200 bg-mint-50/60 p-4">
-          <p className="text-sm font-medium text-mint-800">
+        <div className="rounded-xl border border-mint-200 bg-mint-50/60 p-4 dark:border-mint-900/50 dark:bg-mint-950/40">
+          <p className="text-sm font-medium text-mint-800 dark:text-mint-300">
             Your request looks clear.
           </p>
-          <p className="mt-1 text-xs text-mint-700">
+          <p className="mt-1 text-xs text-mint-700 dark:text-mint-400">
             You can still ask Promptly to refine the wording, or copy this
             prompt as-is.
           </p>
@@ -610,7 +619,7 @@ function AnalysisView({
       )}
 
       {/* Action buttons */}
-      <div className="flex flex-wrap gap-2 border-t border-ink-100 pt-4">
+      <div className="flex flex-wrap gap-2 border-t border-ink-100 pt-4 dark:border-ink-800">
         {hasMissing && (
           <button type="button" onClick={onAskMe} className="btn-primary">
             <CircleHelp size={15} />
@@ -645,20 +654,20 @@ function MobileAssistantSheet(
         className="absolute inset-0 bg-ink-900/40 backdrop-blur-sm animate-fade-in"
         onClick={props.onClose}
       />
-      <div className="absolute inset-x-0 bottom-0 max-h-[85vh] overflow-hidden rounded-t-2xl border-t border-ink-200 bg-white shadow-pop animate-slide-up">
-        <div className="flex items-center justify-between border-b border-ink-100 px-4 py-3">
+      <div className="absolute inset-x-0 bottom-0 max-h-[85vh] overflow-hidden rounded-t-2xl border-t border-ink-200 bg-white shadow-pop animate-slide-up dark:border-ink-800 dark:bg-ink-900">
+        <div className="flex items-center justify-between border-b border-ink-100 px-4 py-3 dark:border-ink-800">
           <div className="flex items-center gap-2">
             <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-brand-600 text-white">
               <Sparkles size={14} />
             </span>
-            <span className="text-sm font-semibold text-ink-900">
+            <span className="text-sm font-semibold text-ink-900 dark:text-white">
               Prompt Assistant
             </span>
           </div>
           <button
             type="button"
             onClick={props.onClose}
-            className="rounded-md p-1.5 text-ink-400 hover:bg-ink-100 hover:text-ink-700"
+            className="rounded-md p-1.5 text-ink-400 hover:bg-ink-100 hover:text-ink-700 dark:text-ink-400 dark:hover:bg-ink-800 dark:hover:text-ink-200"
             aria-label="Close"
           >
             <X size={18} />
@@ -694,7 +703,7 @@ function MobileAssistantTrigger({
     <button
       type="button"
       onClick={onClick}
-      className="inline-flex w-fit items-center gap-2 rounded-full border border-brand-200 bg-white px-3.5 py-2 text-sm font-medium text-brand-700 shadow-soft lg:hidden"
+      className="inline-flex w-fit items-center gap-2 rounded-full border border-brand-200 bg-white px-3.5 py-2 text-sm font-medium text-brand-700 shadow-soft lg:hidden dark:border-brand-900/50 dark:bg-ink-900 dark:text-brand-300"
     >
       <Sparkles size={14} />
       {label}

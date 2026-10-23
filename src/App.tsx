@@ -1,5 +1,6 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { AuthProvider, useAuth } from '@/lib/auth';
+import { ThemeProvider } from '@/lib/theme';
 import { ToastProvider } from '@/components/Toast';
 import { AppShell } from '@/components/AppShell';
 import { LandingPage } from '@/pages/LandingPage';
@@ -11,12 +12,16 @@ import type { ReactNode } from 'react';
 
 export default function App() {
   return (
-    <AuthProvider>
-      <ToastProvider>
-        <Routes>
+    <ThemeProvider>
+      <AuthProvider>
+        <ToastProvider>
+          <Routes>
           <Route path="/" element={<LandingPage />} />
+          <Route path="/auth" element={<Navigate to="/auth/login" replace />} />
           <Route path="/auth/login" element={<AuthPage mode="login" />} />
           <Route path="/auth/signup" element={<AuthPage mode="signup" />} />
+          <Route path="/auth/forgot-password" element={<AuthPage mode="forgot" />} />
+          <Route path="/auth/reset-password" element={<AuthPage mode="reset" />} />
 
           {/* Authenticated app routes */}
           <Route
@@ -47,6 +52,7 @@ export default function App() {
         </Routes>
       </ToastProvider>
     </AuthProvider>
+  </ThemeProvider>
   );
 }
 
