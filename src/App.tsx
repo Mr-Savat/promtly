@@ -34,6 +34,7 @@ export default function App() {
           >
             <Route index element={<EditorPage />} />
             <Route path="history" element={<HistoryPage />} />
+            <Route path="settings" element={<SettingsPage />} />
           </Route>
 
           <Route

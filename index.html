@@ -21,6 +21,29 @@
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Kantumruy+Pro:wght@300;400;500;600;700&display=swap"
       rel="stylesheet"
     />
+
+    <!-- Patch React DOM reconciliation against Google Translate <font> mutations -->
+    <script>
+      (function () {
+        if (typeof Node === 'function' && Node.prototype) {
+          var originalRemoveChild = Node.prototype.removeChild;
+          Node.prototype.removeChild = function (child) {
+            if (child.parentNode !== this) {
+              return child;
+            }
+            return originalRemoveChild.apply(this, arguments);
+          };
+
+          var originalInsertBefore = Node.prototype.insertBefore;
+          Node.prototype.insertBefore = function (newNode, referenceNode) {
+            if (referenceNode && referenceNode.parentNode !== this) {
+              return newNode;
+            }
+            return originalInsertBefore.apply(this, arguments);
+          };
+        }
+      })();
+    </script>
   </head>
   <body>
     <!-- Hidden Google Translate Element Container (rendered offscreen to allow DOM events) -->
@@ -28,21 +51,24 @@
 
     <div id="root"></div>
 
-    <!-- Google Translate API Script -->
+    <!-- Google Translate API Script (deferred so React mounts first) -->
     <script type="text/javascript">
       function googleTranslateElementInit() {
-        new google.translate.TranslateElement(
-          {
-            pageLanguage: 'en',
-            includedLanguages: 'en,km',
-            autoDisplay: false,
-          },
-          'google_translate_element'
-        );
+        if (window.google && window.google.translate) {
+          new window.google.translate.TranslateElement(
+            {
+              pageLanguage: 'en',
+              includedLanguages: 'en,km',
+              autoDisplay: false,
+            },
+            'google_translate_element'
+          );
+        }
       }
     </script>
     <script
       type="text/javascript"
+      defer
       src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
     ></script>
 

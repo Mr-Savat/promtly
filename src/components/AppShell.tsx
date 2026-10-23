@@ -52,10 +52,17 @@ export function AppShell({ children }: AppShellProps) {
     navigate('/');
   };
 
+  const isItemActive = (to: string) => {
+    if (to === '/app') return location.pathname === '/app';
+    if (to === '/app/history') return location.pathname.startsWith('/app/history');
+    if (to === '/settings') return location.pathname.startsWith('/settings') || location.pathname.startsWith('/app/settings');
+    return false;
+  };
+
   const getPageTitle = () => {
     if (location.pathname === '/app') return 'Editor';
     if (location.pathname.startsWith('/app/history')) return 'History';
-    if (location.pathname.startsWith('/settings')) return 'Settings';
+    if (location.pathname.startsWith('/settings') || location.pathname.startsWith('/app/settings')) return 'Settings';
     return 'Dashboard';
   };
 
@@ -78,32 +85,28 @@ export function AppShell({ children }: AppShellProps) {
 
       {/* Navigation */}
       <nav className="flex-1 space-y-1.5 px-3 py-4 overflow-y-auto scrollbar-thin">
-        {navItems.map((item) => (
-          <NavLink
-            key={item.to}
-            to={item.to}
-            end={item.end}
-            className={({ isActive }) =>
-              `group flex items-center gap-3 rounded-xl px-3.5 py-2.5 text-sm font-medium transition-all ${
-                isActive
+        {navItems.map((item) => {
+          const active = isItemActive(item.to);
+          return (
+            <Link
+              key={item.to}
+              to={item.to}
+              className={`group flex items-center gap-3 rounded-xl px-3.5 py-2.5 text-sm font-medium transition-all ${
+                active
                   ? 'bg-brand-50 text-brand-700 font-semibold shadow-xs dark:bg-brand-950/60 dark:text-brand-300'
                   : 'text-ink-600 hover:bg-ink-100/70 hover:text-ink-900 dark:text-ink-400 dark:hover:bg-ink-800/60 dark:hover:text-white'
-              }`
-            }
-          >
-            {({ isActive }) => (
-              <>
-                <item.icon
-                  size={18}
-                  className={`shrink-0 transition-colors ${
-                    isActive ? 'text-brand-600 dark:text-brand-400' : 'text-ink-400 group-hover:text-ink-700 dark:text-ink-500 dark:group-hover:text-ink-300'
-                  }`}
-                />
-                <span className="truncate">{item.label}</span>
-              </>
-            )}
-          </NavLink>
-        ))}
+              }`}
+            >
+              <item.icon
+                size={18}
+                className={`shrink-0 transition-colors ${
+                  active ? 'text-brand-600 dark:text-brand-400' : 'text-ink-400 group-hover:text-ink-700 dark:text-ink-500 dark:group-hover:text-ink-300'
+                }`}
+              />
+              <span className="truncate">{item.label}</span>
+            </Link>
+          );
+        })}
       </nav>
 
       {/* Footer / Account */}
@@ -233,21 +236,21 @@ export function AppShell({ children }: AppShellProps) {
 
         {/* Mobile bottom nav bar */}
         <nav className="fixed bottom-0 inset-x-0 z-20 flex border-t border-ink-200 bg-white/95 backdrop-blur-md md:hidden dark:border-ink-800 dark:bg-ink-950/95 transition-colors duration-200">
-          {navItems.map((item) => (
-            <NavLink
-              key={item.to}
-              to={item.to}
-              end={item.end}
-              className={({ isActive }) =>
-                `flex flex-1 flex-col items-center gap-1 py-2 text-[10px] font-medium transition-colors ${
-                  isActive ? 'text-brand-600 dark:text-brand-400 font-semibold' : 'text-ink-500 dark:text-ink-400'
-                }`
-              }
-            >
-              <item.icon size={18} />
-              <span>{item.label}</span>
-            </NavLink>
-          ))}
+          {navItems.map((item) => {
+            const active = isItemActive(item.to);
+            return (
+              <Link
+                key={item.to}
+                to={item.to}
+                className={`flex flex-1 flex-col items-center gap-1 py-2 text-[10px] font-medium transition-colors ${
+                  active ? 'text-brand-600 dark:text-brand-400 font-semibold' : 'text-ink-500 dark:text-ink-400'
+                }`}
+              >
+                <item.icon size={18} />
+                <span>{item.label}</span>
+              </Link>
+            );
+          })}
         </nav>
       </div>
     </div>
